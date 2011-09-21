@@ -9,20 +9,20 @@ namespace sihft {
 
 template <typename T>
 class tri
-  : boost::ordered_euclidean_ring_operators< tri<T> >
-  , boost::ordered_euclidean_ring_operators< tri<T>, T >
+  : boost::euclidean_ring_operators< tri<T> >
+  , boost::euclidean_ring_operators< tri<T>, T >
   , boost::bitwise< tri<T> >
   , boost::bitwise< tri<T>, T >
   , boost::shiftable< tri<T> >
   , boost::shiftable< tri<T>, T >
   , boost::unit_steppable< tri<T> >
 {
+public:
   T original;
   volatile T backup1, backup2;
 
-public:
   tri() { }
-  tri(const tri<T> & x) : original(x.original), backup(x.backup1), backup(x.backup2) { }
+  tri(const tri<T> & x) : original(x.original), backup1(x.backup1), backup2(x.backup2) { }
   tri(const T & x) : original(x), backup1(x), backup2(x) { }
 
   ~tri() {
@@ -30,11 +30,15 @@ public:
   }
 
   void assert_valid() const {
-    if ( unlikely(original != backup1) && unlikely(original != backup2) )
+    if ( unlikely(original != backup1) || unlikely(original != backup2) )
       fault_detected();
   }
 
-  inline operator T() const {
+  inline operator const T() const {
+    assert_valid();
+    return original;
+  }
+  inline operator T() {
     // Repair the original value from the backup if necessary
     if ( unlikely(original != backup1) || unlikely(original != backup2) )
     {
@@ -51,7 +55,7 @@ public:
     return original;
   }
 
-#define ASSIGN(r, t, op) \
+#define SIHFT_PP_ASSIGN(r, t, op) \
   inline tri& operator op##=(const T & x) \
   { \
     original op##= x; \
@@ -66,7 +70,8 @@ public:
     backup2 op##= x.backup2; \
     return *this; \
   }
-  BOOST_PP_LIST_FOR_EACH(ASSIGN, d, (, (+, (-, (*, (/, (&, (|, (^, (<<, (>>, BOOST_PP_NIL)))))))))))
+  BOOST_PP_LIST_FOR_EACH(SIHFT_PP_ASSIGN, d, (, (+, (-, (*, (/, (&, (|, (^, (<<, (>>, BOOST_PP_NIL)))))))))))
+#undef SIHFT_PP_ASSIGN
 
   inline tri& operator--()
   {
@@ -79,5 +84,46 @@ public:
   }
 
 };
+
+#define SIHFT_PP_COMPARE(r, t, op) \
+  template <typename T> \
+  inline bool operator op(const tri<T> & x, const T & y) \
+  { \
+    if (x.original op y) { \
+        if (unlikely(!(x.backup1 op y)) || unlikely(!(x.backup2 op y))) \
+            fault_detected(); \
+        return true; \
+    } else { \
+        if (unlikely(x.backup1 op y) || unlikely(x.backup2 op y)) \
+            fault_detected(); \
+        return false; \
+    } \
+  }
+  BOOST_PP_LIST_FOR_EACH(SIHFT_PP_COMPARE, d, (<, (<=, (==, (!=, (>=, (>, BOOST_PP_NIL)))))))
+#undef SIHFT_PP_COMPARE
+  // To avoid too many comparisons and still make x op x detect an error we simply swap backup1/backup2
+#define SIHFT_PP_COMPARE(r, t, op) \
+  template <typename T> \
+  inline bool operator op(const tri<T> & x, const tri<T> & y) \
+  { \
+    if (x.original op y.original) { \
+        if (unlikely(!(x.backup1 op y.backup2)) || unlikely(!(x.backup2 op y.backup1))) \
+            fault_detected(); \
+        return true; \
+    } else { \
+        if (unlikely(x.backup1 op y.backup2) || unlikely(x.backup2 op y.backup1)) \
+            fault_detected(); \
+        return false; \
+    } \
+  } \
+  BOOST_PP_LIST_FOR_EACH(SIHFT_PP_COMPARE, d, (<, (<=, (==, (!=, (>=, (>, BOOST_PP_NIL)))))))
+#undef SIHFT_PP_COMPARE
+
+template<typename T> inline bool operator<(const T & x, const tri<T> & y) { return y > x; }
+template<typename T> inline bool operator>(const T & x, const tri<T> & y) { return y < x; }
+template<typename T> inline bool operator<=(const T & x, const tri<T> & y) { return y >= x; }
+template<typename T> inline bool operator>=(const T & x, const tri<T> & y) { return y <= x; }
+template<typename T> inline bool operator==(const T & x, const tri<T> & y) { return y == x; }
+template<typename T> inline bool operator!=(const T & x, const tri<T> & y) { return y != x; }
 
 }

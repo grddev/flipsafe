@@ -38,7 +38,7 @@ public:
     return original;
   }
 
-#define ASSIGN(r, t, op) \
+#define SIHFT_PP_ASSIGN(r, t, op) \
   inline dup& operator op##=(const T & x) \
   { \
     original op##= x; \
@@ -51,7 +51,8 @@ public:
     backup op##= x.backup; \
     return *this; \
   }
-  BOOST_PP_LIST_FOR_EACH(ASSIGN, d, (, (+, (-, (*, (/, (&, (|, (^, (<<, (>>, BOOST_PP_NIL)))))))))))
+  BOOST_PP_LIST_FOR_EACH(SIHFT_PP_ASSIGN, d, (, (+, (-, (*, (/, (&, (|, (^, (<<, (>>, BOOST_PP_NIL)))))))))))
+#undef SIHFT_PP_ASSIGN
 
   inline dup& operator--()
   {
