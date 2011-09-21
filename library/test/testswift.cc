@@ -1,4 +1,4 @@
-#include "swift.hh"
+#include "data/dup.hh"
 #include <boost/test/test_tools.hpp>
 
 int test_main(int, char**)
