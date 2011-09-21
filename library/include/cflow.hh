@@ -27,7 +27,7 @@ struct cflow_check
     compare_block = id;
   }
 
-  cflow_check(int id, int before = compare_block)
+  cflow_check(int id, int before)
     : id(id), before(before)
   {
     if (compare_block != before)
