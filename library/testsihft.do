@@ -1,4 +1,4 @@
-DEPS=(test/testswift.cc src/handler.cc)
+DEPS=(test/testsihft.cc src/handler.cc)
 # put ofiles in build directory
 DEPS=${${DEPS[@]/#/build/}/%.cc/.o}
 redo-ifchange $DEPS

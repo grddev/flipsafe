@@ -1,2 +1,2 @@
-redo-ifchange testswift
-./testswift 1>&2
+redo-ifchange testsihft
+./testsihft 1>&2
