@@ -1,9 +1,7 @@
-#include "data/dup.hh"
-#include "data/tri.hh"
-#include "data/trump.hh"
+#include "data.hh"
 
 #define BOOST_TEST_DYN_LINK
-#define BOOST_TEST_MODULE TestSwift
+#define BOOST_TEST_MODULE TestData
 #include <boost/test/unit_test.hpp>
 
 template <typename Method>
