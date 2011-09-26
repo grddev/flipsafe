@@ -5,7 +5,7 @@ inline dupint& operator COMPOP(dupint& lhs, const int& rhs) {
   return lhs;
 }
 inline dupint& operator COMPOP(dupint& lhs, const dupint& rhs) {
-  lhs.original COMPOP rhs.backup;
-  lhs.backup COMPOP rhs.original;
+  lhs.original COMPOP rhs.original;
+  lhs.backup COMPOP rhs.backup;
   return lhs;
 }
