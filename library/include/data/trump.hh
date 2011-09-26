@@ -18,9 +18,9 @@ class trump
   , boost::shiftable< trump<T, A>, T >
   , boost::unit_steppable< trump<T, A> >
 {
+public:
   T original, backup;
 
-public:
   inline trump() { }
   inline trump(const T & x)
     : original(x)
