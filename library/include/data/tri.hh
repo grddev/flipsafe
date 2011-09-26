@@ -18,18 +18,22 @@ class tri
   , boost::unit_steppable< tri<T> >
 {
 public:
-  T original;
-  volatile T backup1, backup2;
+  T original, backup1, backup2;
 
-  tri() { }
-  tri(const tri<T> & x) : original(x.original), backup1(x.backup1), backup2(x.backup2) { }
-  tri(const T & x) : original(x), backup1(x), backup2(x) { }
+  inline tri() { }
+  inline tri(const T & x)
+    : original(x)
+  {
+    volatile T y = x;
+    backup1 = y;
+    backup2 = y; // Keep separate assignment, to force reread of y
+  }
 
-  ~tri() {
+  inline ~tri() {
     assert_valid();
   }
 
-  void assert_valid() const {
+  inline void assert_valid() const {
     if ( unlikely(original != backup1) || unlikely(original != backup2) )
       fault_detected();
   }
@@ -55,6 +59,14 @@ public:
     return original;
   }
 
+  inline tri& operator=(const T & x)
+  {
+    volatile T y = original = x;
+    backup1 = y;
+    backup2 = y; // Keep separate assignment, to force reread of y
+    return *this;
+  }
+
 #define SIHFT_PP_ASSIGN(r, t, op) \
   inline tri& operator op##=(const T & x) \
   { \
@@ -70,7 +82,7 @@ public:
     backup2 op##= x.backup2; \
     return *this; \
   }
-  BOOST_PP_LIST_FOR_EACH(SIHFT_PP_ASSIGN, d, (, (+, (-, (*, (/, (&, (|, (^, (<<, (>>, BOOST_PP_NIL)))))))))))
+  BOOST_PP_LIST_FOR_EACH(SIHFT_PP_ASSIGN, d, (+, (-, (*, (/, (&, (|, (^, (<<, (>>, BOOST_PP_NIL))))))))))
 #undef SIHFT_PP_ASSIGN
 
   inline tri& operator--()

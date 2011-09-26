@@ -17,25 +17,35 @@ class dup
   , boost::shiftable< dup<T>, T >
   , boost::unit_steppable< dup<T> >
 {
-  T original;
-  volatile T backup;
+  T original, backup;
 
 public:
-  dup() { }
-  dup(const dup<T> & x) : original(x.original), backup(x.backup) { }
-  dup(const T & x) : original(x), backup(x) { }
+  inline dup() { }
+  inline dup(const T & x)
+    : original(x)
+  {
+    volatile T y = x;
+    backup = y;
+  }
 
-  ~dup() {
+  inline ~dup() {
     assert_valid();
   }
 
-  void assert_valid() const {
+  inline void assert_valid() const {
     if ( unlikely(original != backup) )
       fault_detected();
   }
 
   inline operator T() const {
     return original;
+  }
+
+  inline dup& operator=(const T & x)
+  {
+    volatile T y = original = x;
+    backup = y; 
+    return *this;
   }
 
 #define SIHFT_PP_ASSIGN(r, t, op) \
@@ -51,7 +61,7 @@ public:
     backup op##= x.backup; \
     return *this; \
   }
-  BOOST_PP_LIST_FOR_EACH(SIHFT_PP_ASSIGN, d, (, (+, (-, (*, (/, (&, (|, (^, (<<, (>>, BOOST_PP_NIL)))))))))))
+  BOOST_PP_LIST_FOR_EACH(SIHFT_PP_ASSIGN, d, (+, (-, (*, (/, (&, (|, (^, (<<, (>>, BOOST_PP_NIL))))))))))
 #undef SIHFT_PP_ASSIGN
 
   inline dup& operator--()
@@ -97,15 +107,15 @@ public:
    */
   struct addressof
   {
-    addressof(dup<T> *d) : d(d), changed(false) {}
-    ~addressof() {
+    inline addressof(dup<T> *d) : d(d), changed(false) {}
+    inline ~addressof() {
       if (changed)
         d->backup = d->original;
     }
 
-    operator dup<T> *() const { return d; }
-    operator const T *() const { return &d->original; }
-    operator T *() {
+    inline operator dup<T> *() const { return d; }
+    inline operator const T *() const { return &d->original; }
+    inline operator T *() {
       changed = true;
       return &d->original;
     }
@@ -115,7 +125,7 @@ public:
   };
 
 
-  addressof operator&() { return addressof(this); }
+  inline addressof operator&() { return addressof(this); }
 
 };
 

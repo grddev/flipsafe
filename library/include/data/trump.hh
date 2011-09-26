@@ -18,14 +18,16 @@ class trump
   , boost::shiftable< trump<T, A>, T >
   , boost::unit_steppable< trump<T, A> >
 {
-  T original;
-  volatile T backup;
+  T original, backup;
 
 public:
-  trump() { }
-  trump(const trump<T,A> & x) : original(x.original), backup(x.backup) {}
-  trump(const T & x) : original(x), backup(A * x)
+  inline trump() { }
+  inline trump(const T & x)
+    : original(x)
   {
+    volatile T y = A * x;
+    backup = y;
+
     // The multiplication might overflow, which for compile-time constants
     // would be nice to catch during compilation, but that would require a
     // different interface. Theoretically, it would be nicer to detect the
@@ -35,11 +37,11 @@ public:
       fault_detected();
   }
 
-  ~trump() {
+  inline ~trump() {
     assert_valid();
   }
 
-  void assert_valid() const {
+  inline void assert_valid() const {
     if ( unlikely(A*original != backup) )
       fault_detected();
   }
@@ -60,6 +62,13 @@ public:
     return original;
   }
 
+  inline trump& operator=(const T & x)
+  {
+    volatile T y = original = x;
+    backup = A * y;
+    return *this;
+  }
+
 #define SIHFT_PP_ASSIGN(r, t, op) \
   inline trump& operator op##=(const T & x) \
   { \
@@ -67,7 +76,7 @@ public:
     backup op##= A * x; \
     return *this; \
   }
-  BOOST_PP_LIST_FOR_EACH(SIHFT_PP_ASSIGN, d, (, (*, (+, (-, (<<, BOOST_PP_NIL))))))
+  BOOST_PP_LIST_FOR_EACH(SIHFT_PP_ASSIGN, d, (*, (+, (-, (<<, BOOST_PP_NIL)))))
 #undef SIHFT_PP_ASSIGN
 #define SIHFT_PP_ASSIGN(r, t, op) \
   inline trump& operator op##=(const trump<T> & x) \
