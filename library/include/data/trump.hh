@@ -110,44 +110,14 @@ public:
 
 };
 
-#define SIHFT_PP_COMPARE(r, t, op) \
-  template <typename T, unsigned A> \
-  inline bool operator op(const trump<T,A> & x, const T & y) \
-  { \
-    if (x.original op y) { \
-        if (unlikely(!(x.backup op (A*y)))) \
-            fault_detected(); \
-        return true; \
-    } else { \
-        if (unlikely(x.backup op (A*y))) \
-            fault_detected(); \
-        return false; \
-    } \
-  }
-  BOOST_PP_LIST_FOR_EACH(SIHFT_PP_COMPARE, d, (<, (<=, (==, (!=, (>=, (>, BOOST_PP_NIL)))))))
-#undef SIHFT_PP_COMPARE
-#define SIHFT_PP_COMPARE(r, t, op) \
-  template <typename T, unsigned A> \
-  inline bool operator op(const trump<T, A> & x, const trump<T, A> & y) \
-  { \
-    if (x.original op y.original) { \
-        if (unlikely(!(x.backup op y.backup))) \
-            fault_detected(); \
-        return true; \
-    } else { \
-        if (unlikely(x.backup op y.backup)) \
-            fault_detected(); \
-        return false; \
-    } \
-  } \
-  BOOST_PP_LIST_FOR_EACH(SIHFT_PP_COMPARE, d, (<, (<=, (==, (!=, (>=, (>, BOOST_PP_NIL)))))))
-#undef SIHFT_PP_COMPARE
+#define SIHFT_TRUMP_COMPOPS (10, (+=, -=, *=, /=, %=, |=, &=, ^=, <<=, >>=))
+#define BOOST_PP_ITERATION_LIMITS (0, BOOST_PP_ARRAY_SIZE(SIHFT_TRUMP_COMPOPS)-1)
+#define BOOST_PP_FILENAME_1 "data/op/compound_trump.hh"
+#include BOOST_PP_ITERATE()
 
-template<typename T, unsigned A> inline bool operator<(const T & x, const trump<T,A> & y) { return y > x; }
-template<typename T, unsigned A> inline bool operator>(const T & x, const trump<T,A> & y) { return y < x; }
-template<typename T, unsigned A> inline bool operator<=(const T & x, const trump<T,A> & y) { return y >= x; }
-template<typename T, unsigned A> inline bool operator>=(const T & x, const trump<T,A> & y) { return y <= x; }
-template<typename T, unsigned A> inline bool operator==(const T & x, const trump<T,A> & y) { return y == x; }
-template<typename T, unsigned A> inline bool operator!=(const T & x, const trump<T,A> & y) { return y != x; }
+#define SIHFT_TRUMP_COMPARES  (6, (<, <=, ==, !=, >=, >))
+#define BOOST_PP_ITERATION_LIMITS (0, BOOST_PP_ARRAY_SIZE(SIHFT_TRUMP_COMPARES)-1)
+#define BOOST_PP_FILENAME_1 "data/op/compare_trump.hh"
+#include BOOST_PP_ITERATE()
 
 }

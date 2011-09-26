@@ -17,9 +17,9 @@ class dup
   , boost::shiftable< dup<T>, T >
   , boost::unit_steppable< dup<T> >
 {
+public:
   T original, backup;
 
-public:
   inline dup() { }
   inline dup(const T & x)
     : original(x)
@@ -49,21 +49,6 @@ public:
     return *this;
   }
 
-#define SIHFT_PP_ASSIGN(r, t, op) \
-  inline dup& operator op##=(const T & x) \
-  { \
-    original op##= x; \
-    backup op##= x; \
-    return *this; \
-  } \
-  inline dup& operator op##=(const dup<T> & x) \
-  { \
-    original op##= x.original; \
-    backup op##= x.backup; \
-    return *this; \
-  }
-  BOOST_PP_LIST_FOR_EACH(SIHFT_PP_ASSIGN, d, (+, (-, (*, (/, (&, (|, (^, (<<, (>>, BOOST_PP_NIL))))))))))
-#undef SIHFT_PP_ASSIGN
 
   inline dup& operator--()
   {
@@ -129,5 +114,10 @@ public:
   inline addressof operator&() { return addressof(this); }
 
 };
+
+#define SIHFT_DUP_COMPOPS (10, (+=, -=, *=, /=, %=, |=, &=, ^=, <<=, >>=))
+#define BOOST_PP_ITERATION_LIMITS (0, BOOST_PP_ARRAY_SIZE(SIHFT_DUP_COMPOPS)-1)
+#define BOOST_PP_FILENAME_1 "data/op/compound_dup.hh"
+#include BOOST_PP_ITERATE()
 
 }

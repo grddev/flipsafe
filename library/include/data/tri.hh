@@ -97,45 +97,14 @@ public:
 
 };
 
-#define SIHFT_PP_COMPARE(r, t, op) \
-  template <typename T> \
-  inline bool operator op(const tri<T> & x, const T & y) \
-  { \
-    if (x.original op y) { \
-        if (unlikely(!(x.backup1 op y)) || unlikely(!(x.backup2 op y))) \
-            fault_detected(); \
-        return true; \
-    } else { \
-        if (unlikely(x.backup1 op y) || unlikely(x.backup2 op y)) \
-            fault_detected(); \
-        return false; \
-    } \
-  }
-  BOOST_PP_LIST_FOR_EACH(SIHFT_PP_COMPARE, d, (<, (<=, (==, (!=, (>=, (>, BOOST_PP_NIL)))))))
-#undef SIHFT_PP_COMPARE
-  // To avoid too many comparisons and still make x op x detect an error we simply swap backup1/backup2
-#define SIHFT_PP_COMPARE(r, t, op) \
-  template <typename T> \
-  inline bool operator op(const tri<T> & x, const tri<T> & y) \
-  { \
-    if (x.original op y.original) { \
-        if (unlikely(!(x.backup1 op y.backup2)) || unlikely(!(x.backup2 op y.backup1))) \
-            fault_detected(); \
-        return true; \
-    } else { \
-        if (unlikely(x.backup1 op y.backup2) || unlikely(x.backup2 op y.backup1)) \
-            fault_detected(); \
-        return false; \
-    } \
-  } \
-  BOOST_PP_LIST_FOR_EACH(SIHFT_PP_COMPARE, d, (<, (<=, (==, (!=, (>=, (>, BOOST_PP_NIL)))))))
-#undef SIHFT_PP_COMPARE
+#define SIHFT_TRI_COMPOPS (10, (+=, -=, *=, /=, %=, |=, &=, ^=, <<=, >>=))
+#define BOOST_PP_ITERATION_LIMITS (0, BOOST_PP_ARRAY_SIZE(SIHFT_TRI_COMPOPS)-1)
+#define BOOST_PP_FILENAME_1 "data/op/compound_tri.hh"
+#include BOOST_PP_ITERATE()
 
-template<typename T> inline bool operator<(const T & x, const tri<T> & y) { return y > x; }
-template<typename T> inline bool operator>(const T & x, const tri<T> & y) { return y < x; }
-template<typename T> inline bool operator<=(const T & x, const tri<T> & y) { return y >= x; }
-template<typename T> inline bool operator>=(const T & x, const tri<T> & y) { return y <= x; }
-template<typename T> inline bool operator==(const T & x, const tri<T> & y) { return y == x; }
-template<typename T> inline bool operator!=(const T & x, const tri<T> & y) { return y != x; }
+#define SIHFT_TRI_COMPARES  (6, (<, <=, ==, !=, >=, >))
+#define BOOST_PP_ITERATION_LIMITS (0, BOOST_PP_ARRAY_SIZE(SIHFT_TRI_COMPARES)-1)
+#define BOOST_PP_FILENAME_1 "data/op/compare_tri.hh"
+#include BOOST_PP_ITERATE()
 
 }
