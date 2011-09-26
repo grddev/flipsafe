@@ -11,10 +11,11 @@ struct faulty
 {
   mutable T value;
 
-  faulty() {}
-  faulty(const T & x) : value(x) {}
+  inline faulty() {}
+  template <typename X>
+  inline faulty(const X & x) : value(x) {}
 
-  faulty & operator=(const T & x) { value = x; }
+  inline faulty & operator=(const T & x) { value = x; }
 
   inline void inject() const
   {
@@ -39,14 +40,17 @@ struct faulty
 
 };
 
-// TODO: Compound assignment operators
+#define COMPOPS (10, (+=, -=, *=, /=, %=, |=, &=, ^=, <<=, >>=))
+#define BOOST_PP_ITERATION_LIMITS (0, BOOST_PP_ARRAY_SIZE(COMPOPS)-1)
+#define BOOST_PP_FILENAME_1 "compound_faulty.hh"
+#include BOOST_PP_ITERATE()
 
 template <typename T>
 int under_test(int input)
 {
-  faulty<T> x = (T)(input);
+  faulty<T> x = input;
   if (x <= 2)
-    x = x + 1;
+    x += 1;
   return x;
 }
 
