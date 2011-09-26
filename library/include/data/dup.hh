@@ -38,6 +38,7 @@ public:
   }
 
   inline operator T() const {
+    assert_valid();
     return original;
   }
 
