@@ -10,9 +10,8 @@ std::function<Result(Arguments...)>
 time_redundancy(std::function<Result(Arguments...)> f)
 {
   return [&](Arguments... args) {
-    auto result1 = f(args...);
-    asm __volatile__ ("");
-    auto result2 = f(args...);
+    volatile Result result1 = f(args...);
+    volatile Result result2 = f(args...);
     if (result1 != result2)
       fault_detected();
     return result2;
