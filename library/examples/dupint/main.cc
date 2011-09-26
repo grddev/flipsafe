@@ -5,17 +5,8 @@ using sihft::fault_detected;
 #include <iostream>
 #include <boost/preprocessor.hpp>
 
-#define COMPOP1 +=
-#define COMPOP2 -=
-#define COMPOP3 *=
-#define COMPOP4 /=
-#define COMPOP5 %=
-#define COMPOP6 |=
-#define COMPOP7 ^=
-#define COMPOP8 <<=
-#define COMPOP9 >>=
-
-#define BOOST_PP_ITERATION_LIMITS (1, 9)
+#define COMPOPS (10, (+=, -=, *=, /=, %=, |=, &=, ^=, <<=, >>=))
+#define BOOST_PP_ITERATION_LIMITS (0, BOOST_PP_ARRAY_SIZE(COMPOPS)-1)
 #define BOOST_PP_FILENAME_1 "compound.hh"
 #include BOOST_PP_ITERATE()
 
