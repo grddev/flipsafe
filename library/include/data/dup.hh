@@ -2,6 +2,7 @@
 #define likely(x)       __builtin_expect((x),1)
 #define unlikely(x)     __builtin_expect((x),0)
 #include "handler.hh"
+#include "protected_clone.hh"
 #include <boost/operators.hpp>
 #include <boost/preprocessor.hpp>
 
@@ -22,10 +23,8 @@ public:
 
   inline dup() { }
   inline dup(const T & x)
-    : original(x)
+    : original(x), backup(protected_clone(x))
   {
-    volatile T y = x;
-    backup = y;
   }
 
   inline ~dup() {

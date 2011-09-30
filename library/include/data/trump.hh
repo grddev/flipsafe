@@ -2,6 +2,7 @@
 #define likely(x)       __builtin_expect((x),1)
 #define unlikely(x)     __builtin_expect((x),0)
 #include "handler.hh"
+#include "protected_clone.hh"
 #include <boost/operators.hpp>
 #include <boost/preprocessor.hpp>
 #include <iostream>
@@ -45,10 +46,8 @@ public:
 
   inline trump() { }
   inline trump(const T & x)
-    : original(x)
+    : original(x), backup(scale_check<A>(protected_clone(x)))
   {
-    volatile T y = x;
-    backup = scale_check<A>(y);
   }
 
   inline ~trump() {

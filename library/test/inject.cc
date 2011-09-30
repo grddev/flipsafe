@@ -62,8 +62,8 @@ int auto_under_test_dup_int(int input)
 int manual_under_test_dup_int(int input)
 {
   int x = input;
-  volatile int a = input;
-  int y = a;
+  int y = input;
+  asm ("" : "+r" (y));
   if (x <= 2)
   {
     if ( !likely(y <= 2) )
@@ -100,10 +100,8 @@ int auto_under_test_tri_int(int input)
 
 int manual_under_test_tri_int(int input)
 {
-  int x = input;
-  volatile int a = input;
-  volatile int b = input;
-  int y = a, z = b;
+  int x = input, y = input, z = input;
+  asm ("" : "+r" (y), "+r" (z));
   if (x <= 2 && likely(y <= 2) && likely(z <= 2) )
   {
     x += 1; y += 1; z += 1;
@@ -129,8 +127,8 @@ int auto_under_test_trump_int(int input)
 int manual_under_test_trump_int(int input)
 {
   int x = input;
-  volatile int a = 3 * input;
-  int y = a;
+  int y = 3 * input;
+  asm ("" : "+r" (y));
   if (x <= 2 && likely(y <= 6) )
   {
     x += 1; y += 3;

@@ -2,6 +2,7 @@
 #define likely(x)       __builtin_expect((x),1)
 #define unlikely(x)     __builtin_expect((x),0)
 #include "handler.hh"
+#include "protected_clone.hh"
 #include <boost/operators.hpp>
 #include <boost/preprocessor.hpp>
 
@@ -22,11 +23,8 @@ public:
 
   inline tri() { }
   inline tri(const T & x)
-    : original(x)
+    : original(x), backup1(protected_clone(x)), backup2(protected_clone(x))
   {
-    volatile T y = x;
-    backup1 = y;
-    backup2 = y; // Keep separate assignment, to force reread of y
   }
 
   inline ~tri() {
@@ -67,22 +65,6 @@ public:
     return *this;
   }
 
-#define SIHFT_PP_ASSIGN(r, t, op) \
-  inline tri& operator op##=(const T & x) \
-  { \
-    original op##= x; \
-    backup1 op##= x; \
-    backup2 op##= x; \
-    return *this; \
-  } \
-  inline tri& operator op##=(const tri<T> & x) \
-  { \
-    original op##= x.original; \
-    backup1 op##= x.backup1; \
-    backup2 op##= x.backup2; \
-    return *this; \
-  }
-  BOOST_PP_LIST_FOR_EACH(SIHFT_PP_ASSIGN, d, (+, (-, (*, (/, (&, (|, (^, (<<, (>>, BOOST_PP_NIL))))))))))
 #undef SIHFT_PP_ASSIGN
 
   inline tri& operator--()
