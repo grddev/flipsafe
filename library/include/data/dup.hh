@@ -9,8 +9,8 @@ namespace sihft {
 
 template <typename T>
 class dup
-  : boost::ordered_euclidean_ring_operators< dup<T> >
-  , boost::ordered_euclidean_ring_operators< dup<T>, T >
+  : boost::euclidean_ring_operators< dup<T> >
+  , boost::euclidean_ring_operators< dup<T>, T >
   , boost::bitwise< dup<T> >
   , boost::bitwise< dup<T>, T >
   , boost::shiftable< dup<T> >
@@ -29,7 +29,7 @@ public:
   }
 
   inline ~dup() {
-    assert_valid();
+//    assert_valid();
   }
 
   inline void assert_valid() const {
@@ -119,5 +119,13 @@ public:
 #define BOOST_PP_ITERATION_LIMITS (0, BOOST_PP_ARRAY_SIZE(SIHFT_DUP_COMPOPS)-1)
 #define BOOST_PP_FILENAME_1 "data/op/compound_dup.hh"
 #include BOOST_PP_ITERATE()
+
+
+
+#define SIHFT_DUP_COMPARES  (6, (<, <=, ==, !=, >=, >))
+#define BOOST_PP_ITERATION_LIMITS (0, BOOST_PP_ARRAY_SIZE(SIHFT_DUP_COMPARES)-1)
+#define BOOST_PP_FILENAME_1 "data/op/compare_dup.hh"
+#include BOOST_PP_ITERATE()
+
 
 }

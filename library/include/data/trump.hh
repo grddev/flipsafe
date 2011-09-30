@@ -8,6 +8,28 @@
 
 namespace sihft {
 
+//.The maximum value (for signed/unsigned integers), for unsigned values we set all bits by
+// complementing zero, and for signed values we set all but the most significant (sizeof(T)*8-1).
+// We check for unsigned types by checking that -1 is bigger than zero.
+template <typename T>
+struct int_max
+{
+  enum { value = (T)~((T)-1 > 0 ? 0ull : 1ull << (sizeof(T)*8 - 1)) };
+};
+
+
+
+template <int A, typename T>
+inline static T scale_check(const T & x) {
+  // Multiplication might overflow, and we provide this function to provide
+  // an early check to ensure that this doesn't happen. Ultimately, one would
+  // probably want to specify a scale-check policy for the trump annotation
+  // rather than hardcoding the decision here.
+  if (unlikely(y > int_max<T>::value / A))
+    fault_detected();
+  return A * x;
+}
+
 template <typename T, int A = 3>
 class trump
   : boost::euclidean_ring_operators< trump<T, A> >
@@ -25,16 +47,8 @@ public:
   inline trump(const T & x)
     : original(x)
   {
-    volatile T y = A * x;
+    volatile T y = scale_check<A>(x);
     backup = y;
-
-    // The multiplication might overflow, which for compile-time constants
-    // would be nice to catch during compilation, but that would require a
-    // different interface. Theoretically, it would be nicer to detect the
-    // overflow, and not do this extra check, but that would be somewhat
-    // complicated to do in a type-generic way.
-    if ( unlikely((backup / A) != original) )
-      fault_detected();
   }
 
   inline ~trump() {
@@ -42,7 +56,7 @@ public:
   }
 
   inline void assert_valid() const {
-    if ( unlikely(A*original != backup) )
+    if ( !likely(A*original == backup) )
       fault_detected();
   }
 
@@ -65,37 +79,8 @@ public:
   inline trump& operator=(const T & x)
   {
     volatile T y = original = x;
-    backup = A * y;
+    backup = scale_check<A>(y);
     return *this;
-  }
-
-#define SIHFT_PP_ASSIGN(r, t, op) \
-  inline trump& operator op##=(const T & x) \
-  { \
-    original op##= x; \
-    backup op##= A * x; \
-    return *this; \
-  }
-  BOOST_PP_LIST_FOR_EACH(SIHFT_PP_ASSIGN, d, (*, (+, (-, (<<, BOOST_PP_NIL)))))
-#undef SIHFT_PP_ASSIGN
-#define SIHFT_PP_ASSIGN(r, t, op) \
-  inline trump& operator op##=(const trump<T> & x) \
-  { \
-    original op##= x.original; \
-    backup op##= x.backup; \
-    return *this; \
-  }
-  BOOST_PP_LIST_FOR_EACH(SIHFT_PP_ASSIGN, d, (, (+, (-, BOOST_PP_NIL))))
-#undef SIHFT_PP_ASSIGN
-
-  inline trump& operator *=(const trump<T> & x)
-  {
-    return *this *= (T)x;
-  }
-
-  inline trump& operator <<=(const trump<T> & x)
-  {
-    return *this <<= (T)x;
   }
 
   inline trump& operator--()

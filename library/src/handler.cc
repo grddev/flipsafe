@@ -10,11 +10,10 @@ void set_fault_detected(fault_detected_handler f) throw()
   handler = f;
 }
 
-void fault_detected() {
+void fault_detected() throw() {
   if (handler)
     handler();
-  else
-    abort();
+  abort();
 }
 
 }

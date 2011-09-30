@@ -3,14 +3,13 @@ template <typename T>
 inline bool operator COMPARE(const tri<T> & x, const T & y)
 {
   if (x.original COMPARE y) {
-      if (unlikely(!(x.backup1 COMPARE y)) || unlikely(!(x.backup2 COMPARE y)))
-          fault_detected();
-      return true;
+      if (likely(x.backup1 COMPARE y) && likely(x.backup2 COMPARE y))
+          return true;
   } else {
-      if (unlikely(x.backup1 COMPARE y) || unlikely(x.backup2 COMPARE y))
-          fault_detected();
-      return false;
+      if (!unlikely(x.backup1 COMPARE y) && !unlikely(x.backup2 COMPARE y))
+          return false;
   }
+  fault_detected();
 }
 
 template <typename T>
