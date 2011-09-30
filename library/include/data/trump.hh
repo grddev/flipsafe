@@ -25,7 +25,7 @@ inline static T scale_check(const T & x) {
   // an early check to ensure that this doesn't happen. Ultimately, one would
   // probably want to specify a scale-check policy for the trump annotation
   // rather than hardcoding the decision here.
-  if (unlikely(y > int_max<T>::value / A))
+  if (unlikely(x > int_max<T>::value / A))
     fault_detected();
   return A * x;
 }
@@ -47,8 +47,8 @@ public:
   inline trump(const T & x)
     : original(x)
   {
-    volatile T y = scale_check<A>(x);
-    backup = y;
+    volatile T y = x;
+    backup = scale_check<A>(y);
   }
 
   inline ~trump() {

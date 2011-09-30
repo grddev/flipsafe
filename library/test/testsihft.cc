@@ -29,8 +29,55 @@ void data_test()
   BOOST_CHECK_EQUAL(y1, 2 * 12345);
 
   BOOST_CHECK_EQUAL(x1 += x1, y1 += y1);
-  BOOST_CHECK_EQUAL(x1, 4 * 12345);
   BOOST_CHECK_EQUAL(y1, 4 * 12345);
+
+  BOOST_CHECK_EQUAL(x1 *= 3, y1 *= 3);
+  BOOST_CHECK_EQUAL(y1, 12 * 12345);
+
+  BOOST_CHECK_EQUAL(x2 /= x2, y2 /= y2);
+  BOOST_CHECK_EQUAL(y2, 1);
+
+  BOOST_CHECK_EQUAL(x2 <<= 1, y2 <<= 1);
+  BOOST_CHECK_EQUAL(y2, 2);
+
+  BOOST_CHECK_EQUAL(x2 <<= x2, y2 <<= x2);
+  BOOST_CHECK_EQUAL(y2, 8);
+
+  BOOST_CHECK_EQUAL(x1 *= x2, y1 *= y2);
+  BOOST_CHECK_EQUAL(y1, 8 * 12 * 12345);
+
+  BOOST_CHECK_EQUAL(x1 /= 3, y1 /= 3);
+  BOOST_CHECK_EQUAL(y1, 8 * 4 * 12345);
+
+  BOOST_CHECK_EQUAL(x1 >>= 2, y1 >>= 2);
+  BOOST_CHECK_EQUAL(y1, 8 * 12345);
+
+  BOOST_CHECK_EQUAL(x2 %= 5 , y2 %= 5);
+  BOOST_CHECK_EQUAL(y2, 3);
+
+  BOOST_CHECK_EQUAL(x1 >>= x2, y1 >>= x2);
+  BOOST_CHECK_EQUAL(y1, 12345);
+
+  BOOST_CHECK_EQUAL(x1 %= x2 , y1 %= x2);
+  BOOST_CHECK_EQUAL(y1, 0);
+
+  BOOST_CHECK_EQUAL(x1 |= x2 , y1 |= x2);
+  BOOST_CHECK_EQUAL(y1, 3);
+
+  BOOST_CHECK_EQUAL(x1 |= 5 , y1 |= 5);
+  BOOST_CHECK_EQUAL(y1, 7);
+
+  BOOST_CHECK_EQUAL(x1 ^= x2 , y1 ^= x2);
+  BOOST_CHECK_EQUAL(y1, 4);
+
+  BOOST_CHECK_EQUAL(x1 ^= 13 , y1 ^= 13);
+  BOOST_CHECK_EQUAL(y1, 9);
+
+  BOOST_CHECK_EQUAL(x1 &= 5 , y1 &= 5);
+  BOOST_CHECK_EQUAL(y1, 1);
+
+  BOOST_CHECK_EQUAL(x1 &= x2 , y1 &= y2);
+  BOOST_CHECK_EQUAL(y1, 1);
 }
 
 namespace traits

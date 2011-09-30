@@ -1,3 +1,4 @@
+#include <setjmp.h>
 #include "time_redundancy.hh"
 
 #define BOOST_TEST_DYN_LINK
@@ -24,10 +25,10 @@ int stateful(int a, int b)
   return c += a + b;
 }
 
-static int error_count = 0;
-void error_collector()
+jmp_buf retbuf;
+void throw_on_detected()
 {
-  error_count++;
+  longjmp(retbuf, 1);
 }
 
 // The main application, where redundancy is plugged in using higher-order function
@@ -35,10 +36,12 @@ BOOST_AUTO_TEST_CASE(timered)
 {
   BOOST_CHECK_EQUAL(stateless(1,2), sihft::time_redundancy(function(stateless))(1,2));
 
-  sihft::set_fault_detected(error_collector);
+  sihft::set_fault_detected(throw_on_detected);
   // This will obviously not be true for any stateful function, as the results
   // might be the same, given that the error_collector just falls through.
-  BOOST_CHECK_NE(stateful(1,2), sihft::time_redundancy(function(stateful))(1,2));
-  // We should see one error in the error collector though.
-  BOOST_CHECK_EQUAL(1, error_count);
+  if (!setjmp(retbuf)) 
+  {
+    sihft::time_redundancy(function(stateful))(1,2);
+    BOOST_ERROR( "Error not detected" );
+  }
 }
