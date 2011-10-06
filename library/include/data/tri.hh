@@ -23,7 +23,7 @@ public:
 
   inline tri() { }
   inline tri(const T & x)
-    : original(x), backup1(protected_clone(x)), backup2(protected_clone(x))
+    : original(x), backup1(protected_clone(x)), backup2(protected_clone(backup1))
   {
   }
 
@@ -59,9 +59,8 @@ public:
 
   inline tri& operator=(const T & x)
   {
-    volatile T y = original = x;
-    backup1 = y;
-    backup2 = y; // Keep separate assignment, to force reread of y
+    // Assign separately, to ensure compiler doesn't know any relations between the variables...
+    backup2 = protected_clone(backup1 = protected_clone(original = x));
     return *this;
   }
 
