@@ -7,10 +7,12 @@ done
 redo-ifchange "$root/does.sh"
 
 function c++() {
+  # The files on the commandline are not (always) reported by g++
+  inputs=($(printf "%s\n" "$@" | grep '\.cc$'))
   depfile=/tmp/does.dep.$$
   g++ -I"$root/include" -I. -Wall -Werror -Wextra -MT x -MD -MF $depfile "$@"
   result=$?
-  sed '1s,.*: *,,;s,\\$,,' < $depfile | xargs redo-ifchange
+  sed '1s,.*: *,,;s,\\$,,' < $depfile | xargs redo-ifchange "${inputs[@]}"
   rm -- $depfile 2> /dev/null
   return $result
 }
