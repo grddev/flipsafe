@@ -1,4 +1,7 @@
+#define likely(x)       __builtin_expect((x),1)
+#define unlikely(x)     __builtin_expect((x),0)
 #include "handler.hh"
+#include "protected_clone.hh"
 
 namespace sihft
 {
@@ -24,19 +27,19 @@ struct cflow_check
   cflow_check(int id)
     : id(id), before(compare_block)
   {
-    compare_block = id;
+    compare_block = protected_clone(id);
   }
 
   cflow_check(int id, int before)
     : id(id), before(before)
   {
-    if (compare_block != before)
+    if (unlikely(compare_block != before))
       fault_detected();
     compare_block = id;
   }
 
   ~cflow_check() {
-    if (compare_block != id)
+    if (unlikely(compare_block != id))
       fault_detected();
     compare_block = before;
   }
