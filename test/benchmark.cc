@@ -8,27 +8,35 @@
 #include "basic/dup-auto.cc"
 #undef basic
 
-#define basic auto_tri
-#include "basic/tri-auto.cc"
-#undef basic
-
-#define basic auto_trump
-#include "basic/trump-auto.cc"
-#undef basic
-
 #define basic hand_dup
 #include "basic/dup-hand.cc"
+#undef basic
+
+#define basic auto_tri
+#include "basic/tri-auto.cc"
 #undef basic
 
 #define basic hand_tri
 #include "basic/tri-hand.cc"
 #undef basic
 
+#define basic auto_trump
+#include "basic/trump-auto.cc"
+#undef basic
+
 #define basic hand_trump
 #include "basic/trump-hand.cc"
 #undef basic
 
-const unsigned long long iterations = 300000000;
+#define basic auto_cflow
+#include "basic/cflow-auto.cc"
+#undef basic
+
+#define basic hand_cflow
+#include "basic/cflow-hand.cc"
+#undef basic
+
+const unsigned long long iterations = 200000000;
 
 template <typename F>
 static int run_test(int start, F f, const char * label) {
@@ -58,5 +66,11 @@ int main()
   int atrump = run_test(start, auto_trump, "auto");
   summarize("TRUMP", 1, iterations, true, false);
 
-  printf("Results %i,%i,%i,%i,%i,%i\n", hdup, adup, htri, atri, htrump, atrump);
+  printf("Data %i,%i,%i,%i,%i,%i\n", hdup, adup, htri, atri, htrump, atrump);
+
+  int hcflow = run_test(start, hand_cflow, "hand");
+  int acflow = run_test(start, auto_cflow, "auto");
+  summarize("Control flow", 1, iterations, true, false);
+
+  printf("Cflow %i,%i\n", hcflow, acflow);
 }
