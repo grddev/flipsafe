@@ -3,7 +3,10 @@ int basic(int input)
   int x = input;
   int y = 3 * input;
   asm ("" : "+r" (y));
-  if (x <= 2 && likely(y <= 6) )
+  // Hardcode branch prediction to factor it out of the performance tests.
+  // Also, we can comment out the second condition, as this is automatically
+  // checked by the consistency check in the end.
+  if (likely(x <= 2) /*&& likely(y <= 6)*/ )
   {
     x += 1; y += 3;
   }

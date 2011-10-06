@@ -3,10 +3,13 @@ int basic(int input)
   int x = input;
   int y = input;
   asm ("" : "+r" (y));
-  if (x <= 2)
+  // Hardcode branch prediction to factor it out of the performance tests
+  if (likely(x <= 2))
   {
+    /* We don't need this check, as it will be caught by the check in the end.
     if ( !likely(y <= 2) )
       sihft::fault_detected();
+     */
     x += 1; y += 1;
   }
   /* The following else can be optimized away, as (x > 2 && y <= 2) implies (x != y),

@@ -2,7 +2,8 @@ int basic(int input)
 {
   int x = input, y = input, z = input;
   asm ("" : "+r" (y), "+r" (z));
-  if (x <= 2 && likely(y <= 2) && likely(z <= 2) )
+  // Hardcode first prediction to factor out branch prediction
+  if (likely(x <= 2) /*&& likely(y <= 2) && likely(z <= 2)*/ )
   {
     x += 1; y += 1; z += 1;
   }
