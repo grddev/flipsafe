@@ -18,6 +18,12 @@ struct int_max
   enum { value = (T)~((T)-1 > 0 ? 0ull : 1ull << (sizeof(T)*8 - 1)) };
 };
 
+template <typename T, int A>
+struct max_value
+{
+  enum { value = int_max<T>::value / A };
+};
+
 
 
 template <int A, typename T>
@@ -26,7 +32,7 @@ inline static T scale_check(const T & x) {
   // an early check to ensure that this doesn't happen. Ultimately, one would
   // probably want to specify a scale-check policy for the trump annotation
   // rather than hardcoding the decision here.
-  if (unlikely(x > int_max<T>::value / A))
+  if (unlikely((x > max_value<T,A>::value)))
     fault_detected();
   return A * x;
 }
