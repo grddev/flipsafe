@@ -83,8 +83,7 @@ public:
 
   inline trump& operator=(const T & x)
   {
-    volatile T y = original = x;
-    backup = scale_check<A>(y);
+    backup = scale_check<A>(protected_clone(original = x));
     return *this;
   }
 
