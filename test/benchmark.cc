@@ -5,33 +5,27 @@
 #include "benchmark_timer.h"
 
 #define basic auto_dup
-#define method dup
-#include "basic/auto.hh"
+#include "basic/dup-auto.cc"
 #undef basic
-#undef method
 
 #define basic auto_tri
-#define method tri
-#include "basic/auto.hh"
+#include "basic/tri-auto.cc"
 #undef basic
-#undef method
 
 #define basic auto_trump
-#define method trump
-#include "basic/auto.hh"
+#include "basic/trump-auto.cc"
 #undef basic
-#undef method
 
 #define basic hand_dup
-#include "basic/dup-man.hh"
+#include "basic/dup-hand.cc"
 #undef basic
 
 #define basic hand_tri
-#include "basic/tri-man.hh"
+#include "basic/tri-hand.cc"
 #undef basic
 
 #define basic hand_trump
-#include "basic/trump-man.hh"
+#include "basic/trump-hand.cc"
 #undef basic
 
 const unsigned long long iterations = 300000000;

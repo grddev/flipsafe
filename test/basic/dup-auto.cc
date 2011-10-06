@@ -1,9 +1,7 @@
-#define TEST(x) #x
-#define FULLNAME(x) TEST(data/x.hh)
-#include FULLNAME(method)
+#include "data/dup.hh"
 int basic(int input)
 {
-  sihft::method<int> x = input;
+  sihft::dup<int> x = input;
   // Hardcode prediction, so we get consistent results...
   if (likely(x <= 2))
     x += 1;

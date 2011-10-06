@@ -75,7 +75,7 @@ parse as:
 %i ([ ]*)\"%s\"  %f sec   %f M      %f\r
 
 */
-void summarize(const char *name, int size, int iterations, int show_gmeans, int show_penalty ) {
+void summarize(const char *name, int size, int iterations, int /*show_gmeans*/, int show_penalty ) {
 	int i;
 	double millions = ((double)(size) * iterations)/1000000.0;
 	double total_absolute_times = 0.0;
