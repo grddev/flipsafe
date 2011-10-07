@@ -1,2 +1,2 @@
-redo-ifchange $1.o
-objdump -d $1.o | grep '^ ' > $3
+redo-ifchange $1-O3.o
+objdump -d $1-O3.o | grep '^ ' > $3
