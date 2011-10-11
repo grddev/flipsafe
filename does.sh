@@ -7,13 +7,16 @@ done
 redo-ifchange "$root/does.sh"
 
 function c++() {
-  # The files on the commandline are not (always) reported by g++
-  inputs=($(printf "%s\n" "$@" | grep '\.cc$'))
+  errfile=/tmp/does.err.$$
   depfile=/tmp/does.dep.$$
-  g++ -I"$root/include" -I. -Wall -Werror -Wextra -MT x -MD -MF $depfile "$@"
-  result=$?
-  sed '1s,.*: *,,;s,\\$,,' < $depfile | xargs redo-ifchange "${inputs[@]}"
-  rm -- $depfile 2> /dev/null
+  # Annoyingly, when the output is redirected to a file, gcc resets the dependencies and only stores
+  # the dependencies for the last file on the command line. Thus, we inject cat on the command line to
+  # get all the dependencies. Unfortunately, we thereby loose the return code, and to we work around
+  # that by writing to $errfile. In bash we could have used PIPESTATUS, but that isn't very portable.
+  (g++ -I"$root/include" -I. -Wall -Werror -Wextra -MT x -MD -MF /dev/stdout "$@"; echo $? > $errfile) | cat > $depfile
+  read result < $errfile
+  sed 's,^x: *,,;s,\\$,,' < $depfile | sort -u | xargs redo-ifchange
+  rm -- $depfile $errfile 2> /dev/null
   return $result
 }
 
