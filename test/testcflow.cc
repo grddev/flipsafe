@@ -75,7 +75,7 @@ void run_jump_test(void (*under_test)())
       continue;
 
     tests = 0;
-    sihft::cflow_check::compare_block = -1;
+    sihft::cflow_check::reference_block = -1;
     under_test();
     assert(tests != 0);
   }

@@ -2,6 +2,6 @@
 
 namespace sihft {
 
-int cflow_check::compare_block = -1;
+int cflow_check::reference_block = -1;
 
 }

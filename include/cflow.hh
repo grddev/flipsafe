@@ -14,41 +14,38 @@ namespace sihft
  * the predecessor block. The code checks before entering the scope that
  * the global block id matches the desired predecessor (if one is specifed).
  * Once the specified scope has ended, the code checks that the global
- * block id matches the current scope, and then handles the id back to
+ * block id matches the current scope, and then resets the global id back to
  * the predecessor. This allows for simple syntax-based implementation of
  * these checks, rather than having to perform control flow analysis and
  * figure out all possible predecessor blocks of a certain block.
  *
- * If a block id mismatch is detected, the fault_detected() function is
- * called, and if it returns, the code will continue as if the ids matched.
- * In most cases, however, it is desirable for fault_detected to not return.
+ * If a block block mismatch is detected, execution is terminated through
+ * the fault_detected() function.
  */
 struct cflow_check
 {
-  cflow_check(int id)
-    : id(id), before(compare_block)
+  static int reference_block;
+  int block, wrapping_block;
+
+  cflow_check(int block, int wrapping_block)
+    : block(block), wrapping_block(wrapping_block)
   {
-    compare_block = protected_clone(id);
+    if (unlikely(reference_block != wrapping_block))
+      fault_detected();
+    reference_block = protected_clone(block);
   }
 
-  cflow_check(int id, int before)
-    : id(id), before(before)
+  cflow_check(int block)
+    : block(block), wrapping_block(reference_block)
   {
-    if (unlikely(compare_block != before))
-      fault_detected();
-    compare_block = id;
+    reference_block = protected_clone(block);
   }
 
   ~cflow_check() {
-    if (unlikely(compare_block != id))
+    if (unlikely(reference_block != block))
       fault_detected();
-    compare_block = before;
+    reference_block = protected_clone(wrapping_block);
   }
-
-  static int compare_block;
-
-private:
-  int id, before;
 };
 
 }
