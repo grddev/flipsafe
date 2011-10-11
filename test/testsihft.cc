@@ -1,4 +1,9 @@
 #include "data.hh"
+// Temporary place for this to ensure it at least compiles...
+// TODO: Implement this more nicely.
+namespace sihft {
+#include "data/op/duptrump.hh"
+}
 
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE TestData
