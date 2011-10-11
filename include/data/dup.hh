@@ -28,7 +28,7 @@ public:
   }
 
   inline ~dup() {
-//    assert_valid();
+    assert_valid();
   }
 
   inline void assert_valid() const {
