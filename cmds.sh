@@ -1,10 +1,10 @@
 # Get root dir... assumes that the file was sourced from a
 # script inside the source tree (this file should be in root)
 root=$(readlink -f ${BASH_SOURCE:-$0})
-while [ \! -f "$root/does.sh" ]; do
+while [ \! -f "$root/cmds.sh" ]; do
   root=${root%/*}
 done
-redo-ifchange "$root/does.sh"
+redo-ifchange "$root/cmds.sh"
 
 function c++() {
   errfile=/tmp/does.err.$$
