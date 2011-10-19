@@ -1,17 +1,17 @@
 #include "handler.hh"
 #define likely(x)       __builtin_expect((x),1)
 #define unlikely(x)     __builtin_expect((x),0)
-
+/* NOTE: Keep in mind we have tex references to particular line numbers. */
 int basic(int input)
 {
-  int x = input;
-  int y = input;
-  asm ("" : "+r" (y));
+  int x = input, y = input;
+  asm ("" : "+r" (y)); // trick gcc into forgetting value of y
   // Hardcode branch prediction to factor it out of the performance tests
   if (likely(x <= 2))
   {
-    /* We don't need this check, as it will be caught by the check in the end.
-    if ( !likely(y <= 2) )
+    /* We don't need this check, as it will be caught by the check in the end. */
+    /* Optimization: (x <= 2 && y > 2) implies (x != y)
+    if ( unlikely(y > 2) )
       sihft::fault_detected();
      */
     x += 1; y += 1;
@@ -30,7 +30,8 @@ int basic(int input)
    * pipeline stall, but for dup this is offset by avoiding the final check. For tri
    * and trump, the error will be repaired and then the final consistency check will
    * run on the repaired value.
-   *//*
+   */
+  /* Optimization: (x > 2 && y <= 2) implies (x != y)
   else if (unlikely(y <= 2))
     sihft::fault_detected();
    */
