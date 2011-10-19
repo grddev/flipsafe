@@ -17,7 +17,7 @@ static int run_test(int start, F f, const char * label) {
   start_timer();
   int r = start;
   for (unsigned long long i = 0; i < iterations; ++i)
-    r = f(start);
+    r = f(++start % 4);
   record_result( timer(), label );
   return r;
 }
@@ -27,7 +27,7 @@ static int run_test(int start, F f, const char * label) {
 int main()
 {
   srand(time(NULL));
-  start = rand() % 10;
+  start = rand() % 4;
 
   all_tests();
 }
