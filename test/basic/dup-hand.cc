@@ -5,7 +5,7 @@
 int basic(int input)
 {
   int x = input, y = input;
-  asm ("" : "+r" (y)); // trick gcc into forgetting value of y
+  asm ("" : "+g" (y)); // trick gcc into forgetting value of y
   // Hardcode branch prediction to factor it out of the performance tests
   if (likely(x <= 2))
   {

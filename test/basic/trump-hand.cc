@@ -6,7 +6,7 @@ int basic(int input)
 {
   int x = input;
   int y = 3 * input;
-  asm ("" : "+r" (y));
+  asm ("" : "+g" (y));
   // Hardcode branch prediction to factor it out of the performance tests.
   // Also, we can comment out the second condition, as this is automatically
   // checked by the consistency check in the end.
