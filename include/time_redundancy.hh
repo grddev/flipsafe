@@ -1,21 +1,20 @@
 #include <functional>
 #include <utility>
 #include "handler.hh"
+#include "protected_clone.hh"
 
 namespace sihft {
 
-// Implement the double redundancy as a higher-level function
-template <typename Result, typename... Arguments>
-std::function<Result(Arguments...)>
-time_redundancy(std::function<Result(Arguments...)> f)
+template <typename Function, typename... Arguments>
+inline auto
+time_redundancy(Function f, Arguments... args) -> decltype(f(args...))
 {
-  return [&](Arguments... args) {
-    volatile Result result1 = f(args...);
-    volatile Result result2 = f(args...);
-    if (result1 != result2)
-      fault_detected();
-    return result2;
-  };
+  auto result1 = protected_clone(f(args...));
+  asm volatile ("");
+  auto result2 = protected_clone(f(args...));
+  if (result1 != result2)
+    fault_detected();
+  return result2;
 }
 
 }

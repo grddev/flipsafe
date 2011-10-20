@@ -5,14 +5,6 @@
 #define BOOST_TEST_MODULE TestTimeRedundancy
 #include <boost/test/unit_test.hpp>
 
-// Helper function to promote free function to std::function
-template <typename Result, typename... Arguments>
-std::function<Result(Arguments...)>
-function(Result(&f)(Arguments...))
-{
-  return std::function<Result(Arguments...)>(f);
-}
-
 // The main processing
 int stateless(int a, int b)
 {
@@ -34,14 +26,14 @@ void throw_on_detected()
 // The main application, where redundancy is plugged in using higher-order function
 BOOST_AUTO_TEST_CASE(timered)
 {
-  BOOST_CHECK_EQUAL(stateless(1,2), sihft::time_redundancy(function(stateless))(1,2));
+  BOOST_CHECK_EQUAL(stateless(1,2), sihft::time_redundancy(stateless, 1, 2));
 
   sihft::set_fault_detected(throw_on_detected);
   // This will obviously not be true for any stateful function, as the results
   // might be the same, given that the error_collector just falls through.
   if (!setjmp(retbuf)) 
   {
-    sihft::time_redundancy(function(stateful))(1,2);
+    sihft::time_redundancy(stateful, 1, 2);
     BOOST_ERROR( "Error not detected" );
   }
 }
