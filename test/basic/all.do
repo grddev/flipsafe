@@ -1,4 +1,4 @@
-tests="dup tri trump cflow"
+tests="dup tri trump cflow timer"
 crafts="hand auto"
 olevels="O3 O2 Os O0"
 
