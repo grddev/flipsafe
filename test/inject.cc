@@ -31,8 +31,7 @@ struct faulty
     }
   }
 
-
-  operator const int () const
+  operator int () const
   {
     inject();
     return value;
@@ -48,7 +47,7 @@ struct faulty
 template <typename T>
 inline int under_test(int input)
 {
-  T x = (T)input;
+  T x = input;
   if (x <= 2)
     x += 1;
   return x;
@@ -60,6 +59,8 @@ void throw_on_detected()
   longjmp(retbuf, 1);
 }
 
+static int impact_free, corrupted, crashed;
+
 template <typename T>
 void test_case()
 {
@@ -68,8 +69,8 @@ void test_case()
   int expected = under_test< faulty<T> >(input);
 
   sihft::set_fault_detected(throw_on_detected);
-  int impact_free = 0, corrupted = 0, crashed = 0;
   int start = 0;
+  impact_free = corrupted = crashed = 0;
   while (true) {
     global_counter = start++;
 
