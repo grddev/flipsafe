@@ -30,12 +30,5 @@ inline T protected_clone(const T & x)
 #endif
 }
 
-inline float protected_clone(const float & x)
-{
-  volatile float y = x;
-  return y;
-}
-
-
 }
 
