@@ -1,3 +1,4 @@
+#define SIHFT_IN_TEST
 #include "data.hh"
 // Temporary place for this to ensure it at least compiles...
 // TODO: Implement this more nicely.
@@ -8,81 +9,69 @@ namespace sihft {
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE TestData
 #include <boost/test/unit_test.hpp>
+#include <boost/preprocessor.hpp>
+#include <stdlib.h>
+#include <time.h>
 
 template <typename Method>
 void data_test()
 {
+  srand(time(NULL));
+
   typedef typename Method::template bind<int>::type Protected;
-  int x1 = 12345, x2 = 23456;
-  Protected y1 = x1, y2 = x2;
+  int x1, x2;
+  Protected y1, y2;
 
-  BOOST_CHECK_EQUAL(x1, y1);
-  BOOST_CHECK_EQUAL(y2, x2);
-  BOOST_CHECK_NE(y1, x2);
-  BOOST_CHECK_NE(y2, x1);
+#define QUICK_TEST \
+  for (int i = 0; i < 30; i++) \
+    if (y1 = x1 = rand() % ((1 << (sizeof(int)*8-1))/3), true) \
+    if (y2 = x2 = rand() % ((1 << (sizeof(int)*8-1))/3), true) \
+    if ((std::cerr << '.'), true)
 
-  BOOST_CHECK_EQUAL(x1++, y1++);
-  BOOST_CHECK_EQUAL(x1, y1);
-  BOOST_CHECK_EQUAL(x1--, y1--);
-  BOOST_CHECK_EQUAL(x1, y1);
-  BOOST_CHECK_EQUAL(x1 + x1, x1 + y1);
-  BOOST_CHECK_EQUAL(x1 + x1, y1 + y1);
-  BOOST_CHECK_EQUAL(x1 + x1, y1 + x1);
+  std::cerr << "\n==";
+  QUICK_TEST {
+    BOOST_CHECK_EQUAL(x1, y1);
+    BOOST_CHECK_EQUAL(x2, y2);
+    BOOST_CHECK_NE(x1, y2);
+    BOOST_CHECK_NE(x2, y1);
+  }
 
-  BOOST_CHECK_EQUAL(x1 += x1, y1 += x1);
-  BOOST_CHECK_EQUAL(x1, 2 * 12345);
-  BOOST_CHECK_EQUAL(y1, 2 * 12345);
+  std::cerr << "\n++";
+  QUICK_TEST {
+    BOOST_CHECK_EQUAL(x1, y1++);
+    BOOST_CHECK_EQUAL(x1+1, y1);
+  }
+  std::cerr << "\n--";
+  QUICK_TEST {
+    BOOST_CHECK_EQUAL(x1, y1--);
+    BOOST_CHECK_EQUAL(x1-1, y1);
+  }
 
-  BOOST_CHECK_EQUAL(x1 += x1, y1 += y1);
-  BOOST_CHECK_EQUAL(y1, 4 * 12345);
+  std::cerr << "\n+";
+  QUICK_TEST
+    BOOST_CHECK_EQUAL(2*x1, x1 + y1);
+  QUICK_TEST
+    BOOST_CHECK_EQUAL(2*x1, y1 + y1);
+  QUICK_TEST
+    BOOST_CHECK_EQUAL(2*x1, y1 + x1);
 
-  BOOST_CHECK_EQUAL(x1 *= 3, y1 *= 3);
-  BOOST_CHECK_EQUAL(y1, 12 * 12345);
+#define COMPOUND_TEST(r, d, op) \
+  std::cerr << '\n' << #op; \
+  QUICK_TEST { \
+    BOOST_CHECK_EQUAL(x1 op x2, y1 op x2); \
+    BOOST_CHECK_EQUAL(x1, y1); \
+  } \
+  QUICK_TEST { \
+    BOOST_CHECK_EQUAL(x1 op x2, y1 op y2); \
+    BOOST_CHECK_EQUAL(x1, y1); \
+  } \
+  QUICK_TEST { \
+    BOOST_CHECK_EQUAL(x1 op x1, y1 op y1); \
+    BOOST_CHECK_EQUAL(x1, y1); \
+  }
 
-  BOOST_CHECK_EQUAL(x2 /= x2, y2 /= y2);
-  BOOST_CHECK_EQUAL(y2, 1);
+  BOOST_PP_LIST_FOR_EACH(COMPOUND_TEST, _, (+=, (-=, (*=, (/=, (%=, (<<=, (>>=, (|=, (^=, (&=, BOOST_PP_NIL)))))))))))
 
-  BOOST_CHECK_EQUAL(x2 <<= 1, y2 <<= 1);
-  BOOST_CHECK_EQUAL(y2, 2);
-
-  BOOST_CHECK_EQUAL(x2 <<= x2, y2 <<= x2);
-  BOOST_CHECK_EQUAL(y2, 8);
-
-  BOOST_CHECK_EQUAL(x1 *= x2, y1 *= y2);
-  BOOST_CHECK_EQUAL(y1, 8 * 12 * 12345);
-
-  BOOST_CHECK_EQUAL(x1 /= 3, y1 /= 3);
-  BOOST_CHECK_EQUAL(y1, 8 * 4 * 12345);
-
-  BOOST_CHECK_EQUAL(x1 >>= 2, y1 >>= 2);
-  BOOST_CHECK_EQUAL(y1, 8 * 12345);
-
-  BOOST_CHECK_EQUAL(x2 %= 5 , y2 %= 5);
-  BOOST_CHECK_EQUAL(y2, 3);
-
-  BOOST_CHECK_EQUAL(x1 >>= x2, y1 >>= x2);
-  BOOST_CHECK_EQUAL(y1, 12345);
-
-  BOOST_CHECK_EQUAL(x1 %= x2 , y1 %= x2);
-  BOOST_CHECK_EQUAL(y1, 0);
-
-  BOOST_CHECK_EQUAL(x1 |= x2 , y1 |= x2);
-  BOOST_CHECK_EQUAL(y1, 3);
-
-  BOOST_CHECK_EQUAL(x1 |= 5 , y1 |= 5);
-  BOOST_CHECK_EQUAL(y1, 7);
-
-  BOOST_CHECK_EQUAL(x1 ^= x2 , y1 ^= x2);
-  BOOST_CHECK_EQUAL(y1, 4);
-
-  BOOST_CHECK_EQUAL(x1 ^= 13 , y1 ^= 13);
-  BOOST_CHECK_EQUAL(y1, 9);
-
-  BOOST_CHECK_EQUAL(x1 &= 5 , y1 &= 5);
-  BOOST_CHECK_EQUAL(y1, 1);
-
-  BOOST_CHECK_EQUAL(x1 &= x2 , y1 &= y2);
-  BOOST_CHECK_EQUAL(y1, 1);
 }
 
 namespace traits

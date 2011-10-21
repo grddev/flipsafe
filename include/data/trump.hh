@@ -72,6 +72,9 @@ public:
     return original;
   }
   inline operator T() {
+#ifdef SIHFT_IN_TEST
+    assert_valid();
+#else
     if ( unlikely(A*original != backup) )
     {
       if (backup % A == 0)
@@ -79,7 +82,7 @@ public:
       else
         backup = A * original;
     }
-
+#endif
     return original;
   }
 
