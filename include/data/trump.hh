@@ -28,12 +28,14 @@ struct max_value
 
 template <int A, typename T>
 inline static T scale_check(const T & x) {
+#ifndef PROTECTION_DISABLED
   // Multiplication might overflow, and we provide this function to provide
   // an early check to ensure that this doesn't happen. Ultimately, one would
   // probably want to specify a scale-check policy for the trump annotation
   // rather than hardcoding the decision here.
   if (unlikely((x > max_value<T,A>::value)))
     fault_detected();
+#endif
   return A * x;
 }
 

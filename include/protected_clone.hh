@@ -6,6 +6,9 @@ namespace sihft
 template <typename T>
 inline T protected_clone(const T & x)
 {
+#ifdef PROTECTION_DISABLED
+  return x;
+#else
 #ifdef __GNUC__
   T y = x;
   // The asm declaration specifies that the value of y
@@ -24,7 +27,7 @@ inline T protected_clone(const T & x)
   volatile T y = x;
 #endif
   return y;
-
+#endif
 }
 
 inline float protected_clone(const float & x)
