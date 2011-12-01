@@ -1,5 +1,5 @@
 #pragma once
-
+// NOTE: Linerangess are referenced from thesis, take care...
 namespace sihft
 {
 
