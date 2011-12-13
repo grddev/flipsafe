@@ -2,6 +2,7 @@
 #define likely(x)       __builtin_expect((x),1)
 #define unlikely(x)     __builtin_expect((x),0)
 #include "handler.hh"
+#include "assert.hh"
 #include "protected_clone.hh"
 #include <boost/operators.hpp>
 #include <boost/preprocessor.hpp>
@@ -33,8 +34,7 @@ inline static T scale_check(const T & x) {
   // an early check to ensure that this doesn't happen. Ultimately, one would
   // probably want to specify a scale-check policy for the trump annotation
   // rather than hardcoding the decision here.
-  if (unlikely((x > max_value<T,A>::value)))
-    fault_detected();
+  assert ( likely((x <= max_value<T,A>::value)) );
 #endif
   return A * x;
 }
@@ -63,8 +63,7 @@ public:
   }
 
   inline void assert_valid() const {
-    if ( !likely(A*original == backup) )
-      fault_detected();
+    assert( A*original == backup );
   }
 
   inline operator const T() const {
@@ -103,6 +102,11 @@ public:
   }
 
 };
+
+#define SIHFT_TRUMP_UNOPS (4, (!, ~, +, -))
+#define BOOST_PP_ITERATION_LIMITS (0, BOOST_PP_ARRAY_SIZE(SIHFT_TRUMP_UNOPS)-1)
+#define BOOST_PP_FILENAME_1 "data/op/unary_trump.hh"
+#include BOOST_PP_ITERATE()
 
 #define SIHFT_TRUMP_COMPOPS (10, (+=, -=, *=, /=, %=, |=, &=, ^=, <<=, >>=))
 #define BOOST_PP_ITERATION_LIMITS (0, BOOST_PP_ARRAY_SIZE(SIHFT_TRUMP_COMPOPS)-1)

@@ -2,6 +2,7 @@
 #define likely(x)       __builtin_expect((x),1)
 #define unlikely(x)     __builtin_expect((x),0)
 #include "handler.hh"
+#include "assert.hh"
 #include "protected_clone.hh"
 #include <boost/operators.hpp>
 #include <boost/preprocessor.hpp>
@@ -23,7 +24,9 @@ public:
 
   inline tri() { }
   inline tri(const T & x)
-    : original(x), backup1(protected_clone(x)), backup2(protected_clone(backup1))
+    : original(x),
+      backup1(protected_clone(x)),
+      backup2(protected_clone(backup1))
   {
   }
 
@@ -32,8 +35,7 @@ public:
   }
 
   inline void assert_valid() const {
-    if ( unlikely(original != backup1) || unlikely(original != backup2) )
-      fault_detected();
+    assert( (original == backup1) && (original == backup2) );
   }
 
   inline operator const T() const {
@@ -60,11 +62,11 @@ public:
   inline tri& operator=(const T & x)
   {
     // Assign separately, to ensure compiler doesn't know any relations between the variables...
-    backup2 = protected_clone(backup1 = protected_clone(original = x));
+    backup2 =
+      protected_clone(backup1 =
+          protected_clone(original = x));
     return *this;
   }
-
-#undef SIHFT_PP_ASSIGN
 
   inline tri& operator--()
   {
@@ -77,6 +79,11 @@ public:
   }
 
 };
+
+#define SIHFT_TRI_UNOPS (4, (!, ~, +, -))
+#define BOOST_PP_ITERATION_LIMITS (0, BOOST_PP_ARRAY_SIZE(SIHFT_TRI_UNOPS)-1)
+#define BOOST_PP_FILENAME_1 "data/op/unary_tri.hh"
+#include BOOST_PP_ITERATE()
 
 #define SIHFT_TRI_COMPOPS (10, (+=, -=, *=, /=, %=, |=, &=, ^=, <<=, >>=))
 #define BOOST_PP_ITERATION_LIMITS (0, BOOST_PP_ARRAY_SIZE(SIHFT_TRI_COMPOPS)-1)

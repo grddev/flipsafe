@@ -90,19 +90,3 @@ SIHFT_DATA_TEST(dup);
 SIHFT_DATA_TEST(tri);
 SIHFT_DATA_TEST(trump);
 
-
-void update(int * result, int value)
-{
-  *result = value;
-}
-
-BOOST_AUTO_TEST_CASE(data_test_addressof)
-{
-  sihft::dup<int> duped = 10;
-
-  update(&duped, 0);
-  BOOST_CHECK_EQUAL(duped, 0);
-
-  update(&duped, 1);
-  BOOST_CHECK_EQUAL(duped, 1);
-}

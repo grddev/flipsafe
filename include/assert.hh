@@ -1,10 +1,11 @@
+#pragma once
 #include "handler.hh"
 
 namespace sihft {
 
 inline void assert(bool condition)
 {
-  if (!condition) fault_detected();
+  if (__builtin_expect(!condition, 0)) fault_detected();
 }
 
 }
