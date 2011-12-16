@@ -6,7 +6,7 @@ void example_declarative()
     sihft::cflow_check s1(1, 0);
     if (is_button_pressed() && secure) {
       sihft::cflow_check s2(2, 1);
-      launch_missiles();
+      open_door();
     }
     else if (is_switch_pressed()) {
       sihft::cflow_check s3(3, 1);

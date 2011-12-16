@@ -19,7 +19,7 @@ bool is_switch_pressed()
   return false;
 }
 
-void launch_missiles()
+void open_door()
 {
 
 }

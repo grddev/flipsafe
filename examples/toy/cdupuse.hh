@@ -4,7 +4,7 @@ void example_cdup()
   while (wait_for_input()) {
     if (is_button_pressed()) {
       if (cdup_val(secure))
-        launch_missiles();
+        open_door();
     }
     else if (is_switch_pressed()) {
       secure = cdup_neg(secure);

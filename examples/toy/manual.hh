@@ -9,7 +9,7 @@ void example_manual()
     if (is_button_pressed() && secure[0]) {
       sihft::assert(block == 1);
       block = 2;
-      launch_missiles();
+      open_door();
       sihft::assert(block == 2);
       block = 1;
     }
