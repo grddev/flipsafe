@@ -2,4 +2,5 @@ benchmark
 testsihft
 testtime
 testcflow
+testbitcount
 inject
