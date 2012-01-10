@@ -24,8 +24,8 @@ struct faulty
       const int bitcount = CHAR_BIT * sizeof(T);
       if (global_counter < bitcount)
       {
-        // std::cout << "Inject" << std::endl;
-        ((char *)(T*)&value)[global_counter / CHAR_BIT] ^= (1 << (global_counter % CHAR_BIT));
+        ((char *)(T*)&value)[global_counter / CHAR_BIT] ^=
+          (1 << (global_counter % CHAR_BIT));
       }
       global_counter -= bitcount;
     }
