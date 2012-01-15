@@ -6,13 +6,12 @@ struct cppdup
 
   cppdup(int x)
     : orig(x),
-      back(sihft::protected_clone(x)) {}
+    back(protected_clone(x)) {}
 
   cppdup(int porig, int pback)
     : orig(porig), back(pback) {}
 
-  operator int()
-  {
+  operator int() {
     sihft::assert(orig == back);
     return orig;
   }

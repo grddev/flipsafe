@@ -1,6 +1,8 @@
 #include "data.hh"
 #include "cflow.hh"
 #include "assert.hh"
+using sihft::assert;
+using sihft::protected_clone;
 #include "cdup.hh"
 #include "cppdup.hh"
 
