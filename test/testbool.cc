@@ -1,4 +1,8 @@
 #include "data/epbool.hh"
+#include "data/bcbool.hh"
+#include "data/shbool.hh"
+#include "data/rmbool.hh"
+#include "data/csbool.hh"
 
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE TestData
@@ -12,12 +16,20 @@ void check() {
   static_assert( epbool<8,T>::m == (T)0x8080808080808080ull, "Msb" );
 }
 
-BOOST_AUTO_TEST_CASE(bitcount_test) {
+BOOST_AUTO_TEST_CASE(epbool_test) {
   check<unsigned char>();
   check<unsigned short>();
   check<unsigned int>();
   check<unsigned long>();
   check<unsigned long long>();
+}
+
+BOOST_AUTO_TEST_CASE(other_bool) {
+  bcbool<3, unsigned int> a;
+  bcbool<1, unsigned int> b;
+  shbool<16, unsigned int> c;
+  rmbool<1, unsigned int> d;
+  csbool<unsigned char> e;
 }
 
 
