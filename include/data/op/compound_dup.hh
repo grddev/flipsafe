@@ -1,3 +1,4 @@
+// Copyright (C) 2012 Gustav Munkby
 #define COMPOP BOOST_PP_ARRAY_ELEM(BOOST_PP_ITERATION(), SIHFT_DUP_COMPOPS)
 template <typename T, typename U>
 inline dup<T>& operator COMPOP(dup<T>& lhs, const U& rhs) {

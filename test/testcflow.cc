@@ -1,3 +1,4 @@
+// Copyright (C) 2012 Gustav Munkby
 #include "handler.hh"
 #include "cflow.hh"
 #include <setjmp.h>

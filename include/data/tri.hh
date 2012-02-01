@@ -1,3 +1,4 @@
+// Copyright (C) 2012 Gustav Munkby
 #pragma once
 #define likely(x)       __builtin_expect((x),1)
 #define unlikely(x)     __builtin_expect((x),0)
@@ -6,7 +7,6 @@
 #include "protected_clone.hh"
 #include <boost/operators.hpp>
 #include <boost/preprocessor.hpp>
-
 namespace sihft {
 
 template <typename T>

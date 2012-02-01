@@ -1,4 +1,4 @@
-
+// Copyright (C) 2012 Gustav Munkby
 namespace sihft {
 
 typedef void (*fault_detected_handler)();

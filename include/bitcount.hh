@@ -1,3 +1,4 @@
+// Copyright (C) 2012 Gustav Munkby
 template <typename T>
 T bitcount(T v) {
   static_assert((T)~0 > (T)0, "bitcount<T> only works for unsigned T");

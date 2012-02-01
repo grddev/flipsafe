@@ -1,3 +1,4 @@
+// Copyright (C) 2012 Gustav Munkby
 #define UNOP BOOST_PP_ARRAY_ELEM(BOOST_PP_ITERATION(), SIHFT_DUP_UNOPS)
 template <typename T>
 inline dup<T>& operator UNOP(dup<T>& x) {

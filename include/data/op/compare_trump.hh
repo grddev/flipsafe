@@ -1,3 +1,4 @@
+// Copyright (C) 2012 Gustav Munkby
 #define COMPARE BOOST_PP_ARRAY_ELEM(BOOST_PP_ITERATION(), SIHFT_TRUMP_COMPARES)
 template <typename T, unsigned A>
 inline bool operator COMPARE(const trump<T,A> & x, const T & y)

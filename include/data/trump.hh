@@ -1,3 +1,4 @@
+// Copyright (C) 2012 Gustav Munkby
 #pragma once
 #define likely(x)       __builtin_expect((x),1)
 #define unlikely(x)     __builtin_expect((x),0)
@@ -7,7 +8,6 @@
 #include <boost/operators.hpp>
 #include <boost/preprocessor.hpp>
 #include <iostream>
-
 namespace sihft {
 
 //.The maximum value (for signed/unsigned integers), for unsigned values we set all bits by

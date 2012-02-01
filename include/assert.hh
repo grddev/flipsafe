@@ -1,6 +1,6 @@
+// Copyright (C) 2012 Gustav Munkby
 #pragma once
 #include "handler.hh"
-
 namespace sihft {
 
 inline void assert(bool condition)

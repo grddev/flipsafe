@@ -1,3 +1,4 @@
+// Copyright (C) 2012 Gustav Munkby
 #include "bitcount.hh"
 
 #define BOOST_TEST_DYN_LINK

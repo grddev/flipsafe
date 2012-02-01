@@ -1,3 +1,4 @@
+// Copyright (C) 2012 Gustav Munkby
 template <unsigned P = 8, typename T = unsigned int>
 class epbool {
 public:

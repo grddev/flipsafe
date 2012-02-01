@@ -1,3 +1,4 @@
+// Copyright (C) 2012 Gustav Munkby
 #include <setjmp.h>
 #include <climits>
 #include <iostream>

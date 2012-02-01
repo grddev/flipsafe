@@ -1,3 +1,4 @@
+// Copyright (C) 2012 Gustav Munkby
 #define SIHFT_IN_TEST
 #include "data.hh"
 // Temporary place for this to ensure it at least compiles...

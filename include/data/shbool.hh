@@ -1,3 +1,4 @@
+// Copyright (C) 2012 Gustav Munkby
 template <unsigned S = 8*sizeof(unsigned int), typename T = unsigned int>
 class shbool {
 public:

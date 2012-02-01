@@ -1,3 +1,4 @@
+// Copyright (C) 2012 Gustav Munkby
 #pragma once
 #define likely(x)       __builtin_expect((x),1)
 #define unlikely(x)     __builtin_expect((x),0)
@@ -6,7 +7,6 @@
 
 namespace sihft
 {
-
 /**
  * Implementation of local control flow checking using signature checks.
  * Uses RAII to attach a block id (signature) to a code sequence. The

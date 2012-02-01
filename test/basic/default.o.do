@@ -1,3 +1,4 @@
+# Copyright (C) 2012 Gustav Munkby
 source ../../cmds.sh
 test -d build || mkdir build 
 s=${1#build/}

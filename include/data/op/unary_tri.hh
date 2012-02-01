@@ -1,3 +1,4 @@
+// Copyright (C) 2012 Gustav Munkby
 #define UNOP BOOST_PP_ARRAY_ELEM(BOOST_PP_ITERATION(), SIHFT_TRI_UNOPS)
 template <typename T>
 inline tri<T>& operator UNOP(tri<T>& x) {

@@ -1,3 +1,4 @@
+// Copyright (C) 2012 Gustav Munkby
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>

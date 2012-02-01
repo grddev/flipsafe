@@ -1,8 +1,8 @@
+// Copyright (C) 2012 Gustav Munkby
 #pragma once
 // NOTE: Linerangess are referenced from thesis, take care...
 namespace sihft
 {
-
 template <typename T>
 inline T protected_clone(const T & x)
 {

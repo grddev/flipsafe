@@ -1,3 +1,4 @@
+# Copyright (C) 2012 Gustav Munkby
 tests="dup tri trump cflow timer"
 crafts="hand auto"
 olevels="O3 O2 Os O0"

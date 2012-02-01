@@ -1,3 +1,4 @@
+// Copyright (C) 2012 Gustav Munkby
 #include "cflow.hh"
 
 int basic(int input)

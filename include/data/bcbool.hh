@@ -1,3 +1,4 @@
+// Copyright (C) 2012 Gustav Munkby
 #include <bitcount.hh>
 template <unsigned C = 8, typename T = unsigned int>
 class bcbool {

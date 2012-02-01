@@ -1,3 +1,4 @@
+// Copyright (C) 2012 Gustav Munkby
 template <unsigned R = 8*sizeof(unsigned int), typename T = unsigned int>
 class rmbool {
 public:

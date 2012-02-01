@@ -1,3 +1,4 @@
+// Copyright (C) 2012 Gustav Munkby
 #include "data/tri.hh"
 int basic(int input)
 {

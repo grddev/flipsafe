@@ -1,3 +1,4 @@
+// Copyright (C) 2012 Gustav Munkby
 #define likely(x)       __builtin_expect((x),1)
 
 int basic(int input)

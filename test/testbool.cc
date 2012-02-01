@@ -1,3 +1,4 @@
+// Copyright (C) 2012 Gustav Munkby
 #include "data/epbool.hh"
 #include "data/bcbool.hh"
 #include "data/shbool.hh"
