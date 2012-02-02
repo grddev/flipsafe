@@ -1,4 +1,4 @@
-// Copyright (C) 2012 Gustav Munkby
+// Copyright (C) 2012 Gustav Munkby, Hamburg University of Technology (TUHH)
 #define COMPARE BOOST_PP_ARRAY_ELEM(BOOST_PP_ITERATION(), SIHFT_TRI_COMPARES)
 template <typename T>
 inline bool operator COMPARE(const tri<T> & x, const T & y)

@@ -33,7 +33,7 @@ compile the tests.
 
 (The MIT License)
 
-Copyright (c) 2011 Gustav Munkby
+Copyright (c) 2011 Gustav Munkby, Hamburg University of Technology (TUHH)
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

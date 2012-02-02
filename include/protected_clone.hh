@@ -1,4 +1,4 @@
-// Copyright (C) 2012 Gustav Munkby
+// Copyright (C) 2012 Gustav Munkby, Hamburg University of Technology (TUHH)
 #pragma once
 // NOTE: Linerangess are referenced from thesis, take care...
 namespace sihft

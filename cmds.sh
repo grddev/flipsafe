@@ -1,4 +1,4 @@
-# Copyright (C) 2012 Gustav Munkby
+# Copyright (C) 2012 Gustav Munkby, Hamburg University of Technology (TUHH)
 # Get root dir... assumes that the file was sourced from a
 # script inside the source tree (this file should be in root)
 root=$(readlink -f ${BASH_SOURCE:-$0})

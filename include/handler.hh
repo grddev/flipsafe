@@ -1,4 +1,4 @@
-// Copyright (C) 2012 Gustav Munkby
+// Copyright (C) 2012 Gustav Munkby, Hamburg University of Technology (TUHH)
 namespace sihft {
 
 typedef void (*fault_detected_handler)();

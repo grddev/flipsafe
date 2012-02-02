@@ -1,4 +1,4 @@
-// Copyright (C) 2012 Gustav Munkby
+// Copyright (C) 2012 Gustav Munkby, Hamburg University of Technology (TUHH)
 #define COMPOP BOOST_PP_ARRAY_ELEM(BOOST_PP_ITERATION(), SIHFT_TRUMP_COMPOPS)
 #define QUOT '
 #define COMPOPC BOOST_PP_CAT(BOOST_PP_CAT(QUOT,COMPOP),QUOT)

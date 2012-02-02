@@ -1,4 +1,4 @@
-# Copyright (C) 2012 Gustav Munkby
+# Copyright (C) 2012 Gustav Munkby, Hamburg University of Technology (TUHH)
 tests="dup tri trump cflow timer"
 crafts="hand auto"
 olevels="O3 O2 Os O0"

@@ -1,4 +1,4 @@
-// Copyright (C) 2012 Gustav Munkby
+// Copyright (C) 2012 Gustav Munkby, Hamburg University of Technology (TUHH)
 template <unsigned R = 8*sizeof(unsigned int), typename T = unsigned int>
 class rmbool {
 public:

@@ -1,4 +1,4 @@
-// Copyright (C) 2012 Gustav Munkby
+// Copyright (C) 2012 Gustav Munkby, Hamburg University of Technology (TUHH)
 #define SIHFT_IN_TEST
 #include "data.hh"
 // Temporary place for this to ensure it at least compiles...
