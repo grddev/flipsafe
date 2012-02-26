@@ -2,6 +2,7 @@
 #include "data/tri.hh"
 int basic(int input)
 {
+  RegPressure pressure; (void)pressure;
   sihft::tri<int> x = input;
   // Hardcode prediction, so we get consistent results...
   if (likely(x <= 2))

@@ -3,6 +3,7 @@
 
 int basic(int input)
 {
+  RegPressure pressure; (void)pressure;
   int x = input;
   if (likely(x <= 2))
     x += 1;

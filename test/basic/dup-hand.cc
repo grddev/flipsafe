@@ -5,6 +5,7 @@
 /* NOTE: Keep in mind we have tex references to particular line numbers. */
 int basic(int input)
 {
+  RegPressure pressure; (void)pressure;
   int x = input, y = input;
   asm ("" : "+g" (y)); // trick gcc into forgetting value of y
   // Hardcode branch prediction to factor it out of the performance tests

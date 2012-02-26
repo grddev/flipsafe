@@ -5,6 +5,7 @@
 
 int basic(int input)
 {
+  RegPressure pressure; (void)pressure;
   int x = input, y = input, z = input;
   asm ("" : "+g" (y), "+g" (z));
   // Hardcode first prediction to factor out branch prediction

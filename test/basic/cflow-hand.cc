@@ -6,6 +6,7 @@
 
 int basic(int input)
 {
+  RegPressure pressure; (void)pressure;
   static unsigned int block = 0;
   int x = input;
   if (likely(x <= 2))

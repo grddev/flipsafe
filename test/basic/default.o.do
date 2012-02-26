@@ -8,4 +8,6 @@ case $s in
     cppflags=-DPROTECTION_DISABLED
     ;;
 esac
-c++ --std=c++0x -c ${s%-O?}.cc -o $3 -O${s##*-O} -Dbasic=${s//-/_} $cppflags -fdump-tree-all
+rp=${${s%-O?}##*-}.cc
+redo-ifchange ${rp}
+c++ --std=c++0x -c ${s%-*-O?}.cc -o $3 -O${s##*-O} -Dbasic=${s//-/_} -DRegPressure="$(tr -d "\n" < ${rp})" $cppflags

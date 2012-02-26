@@ -3,6 +3,7 @@
 
 int basic(int input)
 {
+  RegPressure pressure; (void)pressure;
   sihft::cflow_check c0(0);
   int x = input;
   if (likely(x <= 2))

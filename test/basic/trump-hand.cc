@@ -5,6 +5,7 @@
 
 int basic(int input)
 {
+  RegPressure pressure; (void)pressure;
   int x = input;
   int y = 3 * input;
   asm ("" : "+g" (y));
