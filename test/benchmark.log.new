@@ -1,0 +1,160 @@
+
+test   description   absolute   operations   ratio with
+number              time       per second   test0
+
+ 0           "O3"   0.65 sec   307.69 M     1.00
+ 1           "O2"   0.65 sec   307.69 M     1.00
+ 2           "Os"   0.70 sec   285.71 M     1.08
+ 3           "O0"   1.05 sec   190.48 M     1.62
+
+Total absolute time for basic:nrp: 3.05 sec
+
+test   description   absolute   operations   ratio with
+number              time       per second   test0
+
+ 0      "hand O3"   0.76 sec   263.16 M     1.00
+ 1      "auto O3"   0.81 sec   246.91 M     1.07
+ 2      "hand O2"   0.70 sec   285.71 M     0.92
+ 3      "auto O2"   0.81 sec   246.91 M     1.07
+ 4      "hand Os"   0.93 sec   215.05 M     1.22
+ 5      "auto Os"   1.09 sec   183.49 M     1.43
+ 6      "hand O0"   1.73 sec   115.61 M     2.28
+ 7      "auto O0"  53.02 sec    3.77 M     69.76
+
+Total absolute time for dup:nrp: 59.85 sec
+
+test   description   absolute   operations   ratio with
+number              time       per second   test0
+
+ 0      "hand O3"   0.72 sec   277.78 M     1.00
+ 1      "auto O3"   0.88 sec   227.27 M     1.22
+ 2      "hand O2"   0.66 sec   303.03 M     0.92
+ 3      "auto O2"   0.88 sec   227.27 M     1.22
+ 4      "hand Os"   1.02 sec   196.08 M     1.42
+ 5      "auto Os"   1.10 sec   181.82 M     1.53
+ 6      "hand O0"   2.15 sec   93.02 M     2.99
+ 7      "auto O0"  52.82 sec    3.79 M     73.36
+
+Total absolute time for tri:nrp: 60.23 sec
+
+test   description   absolute   operations   ratio with
+number              time       per second   test0
+
+ 0      "hand O3"   0.74 sec   270.27 M     1.00
+ 1      "auto O3"   0.87 sec   229.89 M     1.18
+ 2      "hand O2"   0.65 sec   307.69 M     0.88
+ 3      "auto O2"   0.88 sec   227.27 M     1.19
+ 4      "hand Os"   0.93 sec   215.05 M     1.26
+ 5      "auto Os"   2.83 sec   70.67 M     3.82
+ 6      "hand O0"   1.93 sec   103.63 M     2.61
+ 7      "auto O0"  52.72 sec    3.79 M     71.24
+
+Total absolute time for trump:nrp: 61.55 sec
+
+test   description   absolute   operations   ratio with
+number              time       per second   test0
+
+ 0      "hand O3"   0.86 sec   232.56 M     1.00
+ 1      "auto O3"   0.87 sec   229.89 M     1.01
+ 2      "hand O2"   0.79 sec   253.16 M     0.92
+ 3      "auto O2"   0.81 sec   246.91 M     0.94
+ 4      "hand Os"   1.02 sec   196.08 M     1.19
+ 5      "auto Os"   3.86 sec   51.81 M     4.49
+ 6      "hand O0"   2.91 sec   68.73 M     3.38
+ 7      "auto O0"   7.34 sec   27.25 M     8.53
+
+Total absolute time for cflow:nrp: 18.46 sec
+
+test   description   absolute   operations   ratio with
+number              time       per second   test0
+
+ 0      "hand O3"   0.81 sec   246.91 M     1.00
+ 1      "auto O3"   1.57 sec   127.39 M     1.94
+ 2      "hand O2"   0.78 sec   256.41 M     0.96
+ 3      "auto O2"   1.40 sec   142.86 M     1.73
+ 4      "hand Os"   0.87 sec   229.89 M     1.07
+ 5      "auto Os"   1.61 sec   124.22 M     1.99
+ 6      "hand O0"   2.38 sec   84.03 M     2.94
+ 7      "auto O0"   5.87 sec   34.07 M     7.25
+
+Total absolute time for timer:nrp: 15.29 sec
+
+test   description   absolute   operations   ratio with
+number              time       per second   test0
+
+ 0           "O3"   0.84 sec   238.10 M     1.00
+ 1           "O2"   0.90 sec   222.22 M     1.07
+ 2           "Os"   0.82 sec   243.90 M     0.98
+ 3           "O0"   2.58 sec   77.52 M     3.07
+
+Total absolute time for basic:xrp: 5.14 sec
+
+test   description   absolute   operations   ratio with
+number              time       per second   test0
+
+ 0      "hand O3"   0.94 sec   212.77 M     1.00
+ 1      "auto O3"   1.21 sec   165.29 M     1.29
+ 2      "hand O2"   0.95 sec   210.53 M     1.01
+ 3      "auto O2"   1.20 sec   166.67 M     1.28
+ 4      "hand Os"   0.97 sec   206.19 M     1.03
+ 5      "auto Os"   1.09 sec   183.49 M     1.16
+ 6      "hand O0"   3.29 sec   60.79 M     3.50
+ 7      "auto O0"  53.94 sec    3.71 M     57.38
+
+Total absolute time for dup:xrp: 63.59 sec
+
+test   description   absolute   operations   ratio with
+number              time       per second   test0
+
+ 0      "hand O3"   1.28 sec   156.25 M     1.00
+ 1      "auto O3"   1.40 sec   142.86 M     1.09
+ 2      "hand O2"   1.27 sec   157.48 M     0.99
+ 3      "auto O2"   1.40 sec   142.86 M     1.09
+ 4      "hand Os"   1.36 sec   147.06 M     1.06
+ 5      "auto Os"   1.11 sec   180.18 M     0.87
+ 6      "hand O0"   3.92 sec   51.02 M     3.06
+ 7      "auto O0"  53.89 sec    3.71 M     42.10
+
+Total absolute time for tri:xrp: 65.63 sec
+
+test   description   absolute   operations   ratio with
+number              time       per second   test0
+
+ 0      "hand O3"   0.98 sec   204.08 M     1.00
+ 1      "auto O3"   1.21 sec   165.29 M     1.23
+ 2      "hand O2"   0.89 sec   224.72 M     0.91
+ 3      "auto O2"   1.21 sec   165.29 M     1.23
+ 4      "hand Os"   0.93 sec   215.05 M     0.95
+ 5      "auto Os"   2.99 sec   66.89 M     3.05
+ 6      "hand O0"   3.49 sec   57.31 M     3.56
+ 7      "auto O0"  54.14 sec    3.69 M     55.24
+
+Total absolute time for trump:xrp: 65.84 sec
+
+test   description   absolute   operations   ratio with
+number              time       per second   test0
+
+ 0      "hand O3"   1.18 sec   169.49 M     1.00
+ 1      "auto O3"   1.11 sec   180.18 M     0.94
+ 2      "hand O2"   1.18 sec   169.49 M     1.00
+ 3      "auto O2"   1.22 sec   163.93 M     1.03
+ 4      "hand Os"   1.00 sec   200.00 M     0.85
+ 5      "auto Os"   4.45 sec   44.94 M     3.77
+ 6      "hand O0"   4.20 sec   47.62 M     3.56
+ 7      "auto O0"   8.59 sec   23.28 M     7.28
+
+Total absolute time for cflow:xrp: 22.93 sec
+
+test   description   absolute   operations   ratio with
+number              time       per second   test0
+
+ 0      "hand O3"   0.81 sec   246.91 M     1.00
+ 1      "auto O3"   1.57 sec   127.39 M     1.94
+ 2      "hand O2"   0.79 sec   253.16 M     0.98
+ 3      "auto O2"   1.39 sec   143.88 M     1.72
+ 4      "hand Os"   0.87 sec   229.89 M     1.07
+ 5      "auto Os"   1.61 sec   124.22 M     1.99
+ 6      "hand O0"   2.39 sec   83.68 M     2.95
+ 7      "auto O0"   5.86 sec   34.13 M     7.23
+
+Total absolute time for timer:xrp: 15.29 sec
