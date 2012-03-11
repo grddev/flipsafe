@@ -18,7 +18,7 @@ void example_manual()
       block = 3;
       sihft::assert(secure[0] == secure[1]);
       secure[0] = !secure[0];
-      secure[1] = !secure[0];
+      secure[1] = !secure[0];                // mistake
       sihft::assert(block == 3);
       block = 1;
     }
