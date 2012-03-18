@@ -1,7 +1,7 @@
 // Copyright (C) 2012 Gustav Munkby, Hamburg University of Technology (TUHH)
 template <typename T>
 T bitcount(T v) {
-  static_assert((T)~0 > (T)0, "bitcount<T> only works for unsigned T");
+  static_assert((T)~0 > (T)0, "bitcount<T> only works for unsigned");
   // Parallel computation of 2-bit bitcount into every 2 bits (3 ops)
   v = v - ((v >> 1) & (T)~(T)0/3);
   // Parallel summation into 4-bit bitcounts into every 4 bits (4 ops)

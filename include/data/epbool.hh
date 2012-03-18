@@ -2,8 +2,8 @@
 template <unsigned P = 8, typename T = unsigned int>
 class epbool {
 public:
-  static_assert( (T)~0 > 0, "Unsigned type required" );
-  static_assert( (8*sizeof(T)) % P == 0, "Partitions must be same sizes" );
+  static_assert((T)~0 > 0, "Unsigned type required");
+  static_assert((8*sizeof(T)) % P == 0, "Partitions not same sizes");
 
   enum {
     l = (T)~0 / ((1<<P) - 1),
