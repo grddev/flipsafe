@@ -1,35 +1,35 @@
 
-= FlipSafe
+# FlipSafe
 
-== DESCRIPTION:
+## DESCRIPTION:
 
 C++ type library implementation of various hardware fault
 tolerance techniques.
 
-== SYNOPSIS:
+## SYNOPSIS:
 
-  #include "flipsafe/include/data.hh"
+    #include "flipsafe/include/data.hh"
 
-  sihft::dup<int> duplicated;
+    sihft::dup<int> duplicated;
 
-== REQUIREMENTS:
+## REQUIREMENTS:
 
  - redo [http://github.com/apenwarr/redo] (tested 0.05)
  - gcc [http://gcc.gnu.org/] (tested 4.6.2)
  - boost [http://www.boost.org] (tested 1.48.0)
 
-== BUILD:
+## BUILD:
 
 Build and runt he tests:
 
-  cd test
-  redo
+    cd test
+    redo
 
 The build-scripts are very simple, so just
 looking at `test/*.do` should describe how to
 compile the tests.
 
-== LICENSE:
+## LICENSE:
 
 (The MIT License)
 
