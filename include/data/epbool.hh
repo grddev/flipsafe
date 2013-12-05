@@ -5,10 +5,8 @@ public:
   static_assert((T)~0 > 0, "Unsigned type required");
   static_assert((8*sizeof(T)) % P == 0, "Partitions not same sizes");
 
-  enum {
-    l = (T)~0 / ((1<<P) - 1),
-    m = (1<<(P-1)) * l
-  };
+  static const T l = (T)~0 / ((1<<P) - 1);
+  static const T m = (1<<(P-1)) * l;
 
   T i;
   inline epbool() {}
